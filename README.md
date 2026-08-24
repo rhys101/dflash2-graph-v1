@@ -3,7 +3,7 @@
 **A complete, copy-and-run recipe for approximately 77 output tokens/second at
 concurrency 1 with Qwen3.8-27B on one NVIDIA DGX Spark.**
 
-Repository: `https://github.com/rhysjones/dflash2-graph-v1`
+Repository: `https://github.com/rhys101/dflash2-graph-v1`
 
 This release takes the public Qwen3.8-27B NVFP4 DFlash2 stack, makes its
 selector projection compatible with dynamic-shape compilation, and enables
