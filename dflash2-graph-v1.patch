@@ -1,0 +1,20 @@
+--- a/vllm/model_executor/models/qwen3_dflash2.py
++++ b/vllm/model_executor/models/qwen3_dflash2.py
+@@ -271,12 +271,12 @@
+             )
+         weight = self.hidden_projection.weight
+         weight = weight.data if hasattr(weight, "data") else weight
+-        outs = []
+-        chunk = 128
++        # A single FP32 projection is mathematically row-independent and keeps
++        # the leading dimension symbolic for torch.compile / CUDA graph capture.
++        # The former Python chunk loop specialized flat.shape[0] during AOT.
+         w32 = weight.float()
+-        for start in range(0, flat.shape[0], chunk):
+-            outs.append(torch.nn.functional.linear(flat[start : start + chunk].float(), w32))
+-        hidden = torch.cat(outs, 0).to(dtype=hidden_states.dtype).view(*orig[:-1], -1)
++        projected = torch.nn.functional.linear(flat.float(), w32)
++        hidden = projected.to(dtype=hidden_states.dtype).view(*orig[:-1], -1)
+         return _score_edges(
+             self.predecessor_codebook,
+             self.successor_codebook,
