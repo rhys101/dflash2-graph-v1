@@ -16,6 +16,8 @@ patch, and an MIT license. The runtime overlay remains sourced from the
 upstream repository; the patch is also embedded in the Docker build below so
 the complete build stays copy-and-run.
 
+![DFlash2 Graph v1 raises matched single-stream throughput from 69.23 to 77.10 output tokens per second, an 11.37 percent uplift](dflash2-graph-uplift.png)
+
 ## What “77 tok/s” means
 
 It is the aggregate output-token throughput reported by `r0b0bench` with:
